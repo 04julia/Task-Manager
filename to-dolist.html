@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilize conforme sua preferência */
+        .meu-botao {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .meu-botao:hover {
+            background-color: #2980b9;
+        }
+
+        .tarefa-concluida {
+            text-decoration: line-through;
+        }
+    </style>
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+    <div class="lista-tarefas">
+        <h1>Minha Lista de Tarefas</h1>
+        <input id="tarefa" type="text" placeholder="Adicione uma tarefa">
+        <button id="adicionar" class="meu-botao">Adicionar</button>
+        <ul id="tarefas">
+            <!-- Tarefas serão adicionadas aqui -->
+        </ul>
+    </div>
+    <script>
+        // Variáveis
+        const tarefaInput = document.getElementById("tarefa");
+        const adicionarBotao = document.getElementById("adicionar");
+        const listaTarefas = document.getElementById("tarefas");
+
+        // Event Listener para o botão "Adicionar"
+        adicionarBotao.addEventListener("click", adicionarTarefa);
+
+        // Função para adicionar tarefa
+        function adicionarTarefa() {
+            const tarefaTexto = tarefaInput.value.trim();
+            if (tarefaTexto !== "") {
+                const novaTarefa = document.createElement("li");
+                novaTarefa.innerHTML = `
+                    ${tarefaTexto}
+                    <button class="excluir">Excluir</button>
+                    <button class="concluida">Concluída</button>
+                    <select class="prioridade">
+                        <option value="alta">Alta</option>
+                        <option value="média">Média</option>
+                        <option value="baixa">Baixa</option>
+                    </select>
+                `;
+                listaTarefas.appendChild(novaTarefa);
+
+                // Event Listener para o botão "Excluir"
+                const botaoExcluir = novaTarefa.querySelector(".excluir");
+                botaoExcluir.addEventListener("click", function () {
+                    listaTarefas.removeChild(novaTarefa);
+                });
+
+                // Event Listener para o botão "Concluída"
+                const botaoConcluida = novaTarefa.querySelector(".concluida");
+                botaoConcluida.addEventListener("click", function () {
+                    novaTarefa.classList.toggle("tarefa-concluida");
+                });
+
+                tarefaInput.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
